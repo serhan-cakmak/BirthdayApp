@@ -70,12 +70,13 @@ const Register = () => {
                 JSON.stringify(user),
                 {
                     headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+                    //With credentials true idi
+                    withCredentials: false
                 }
             );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
+            // console.log(response?.data);
+            // console.log(response?.accessToken);
+            // console.log(JSON.stringify(response))
             setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
@@ -101,7 +102,9 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <Link to={'/'}>
+                            Sign In
+                        </Link>
                     </p>
                 </section>
             ) : (

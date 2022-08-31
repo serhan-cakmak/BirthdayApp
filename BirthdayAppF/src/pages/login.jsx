@@ -6,11 +6,11 @@ import Registration from './registration';
 import axios from '../api/axios';
 import { Route, Routes } from 'react-router';
 import { Link } from 'react-router-dom'
-const Login_Url = '/auth';
+const User_Url = '/user/login';
 
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    // const { setAuth } = useContext(AuthContext);
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -18,6 +18,8 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+    var userid =0;
+    var userInfo=null;
 
     useEffect(() => {
         emailRef.current.focus();
@@ -31,18 +33,27 @@ const Login = () => {
         e.preventDefault();
 
         try{
-            const response = await axios.post(Login_Url, JSON.stringify(),
+            const user ={  email:email ,password:pwd };
+            console.log(user);
+            const response = await axios.post(User_Url, JSON.stringify(user),
             {
-                headers : {'Content-Type' : 'application/json'},
-                withCredentials: true
+                headers : {'Content-Type' : 'application/json'},      
             });
-            console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            setAuth({email, pwd , accessToken});
+           
+            const userObject = await axios.get(User_Url +'/getUser');
+            console.log(userObject);
+            userInfo = userObject.data;
+
+            // console.log(JSON.stringify(userid?.data));
+            // const accessToken = response?.data?.accessToken;
+            // setAuth({email, pwd , accessToken});
+            
             setEmail('');
             setPwd('');
             setSuccess(true);
+            
         } catch (err) {
+            console.log(err);
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {
@@ -61,7 +72,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>You are logged in!</h1>
+                    <h1>You are logged in! {userid}</h1>
                     <br />
                     <p>
                         <a href="#">Go to Home</a>
@@ -99,7 +110,7 @@ const Login = () => {
                         Need an Account?<br />
                         <span className="line">
                             
-                            <Link to={"./registration"}>
+                            <Link to={"./register"}>
                                 Sign up
                             </Link>
                         </span>

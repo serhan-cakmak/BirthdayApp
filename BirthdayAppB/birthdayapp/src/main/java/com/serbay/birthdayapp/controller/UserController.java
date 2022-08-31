@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -26,11 +27,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-//    @PostMapping("/login")
-//    public int enableAppUser(@RequestBody User user){
-//        return userService.enableAppUser(user.getEmail());
-//
-//    }
+    @PostMapping("/login")
+    public int userValidation(@RequestBody User user) {
+        return userService.userValidator(user.getEmail(), user.getPassword());
+    }
 
+    @GetMapping("/login/getUser")
+    public Optional<User> getUser(){
+        return userService.getUser();
+        }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements  UserService{
@@ -23,10 +24,15 @@ public class UserServiceImpl implements  UserService{
         return userRepository.findAll();
     }
 
-//    @Override
-//    public int enableAppUser(String email) {
-//        return userRepository.enableAppUser(email);
-//    }
+    @Override
+    public int userValidator(String email, String password) {
+        return userRepository.userValidator(email,password);
+    }
+
+    @Override
+    public Optional<User> getUser() {
+        return userRepository.getUser();
+    }
 
 
 }

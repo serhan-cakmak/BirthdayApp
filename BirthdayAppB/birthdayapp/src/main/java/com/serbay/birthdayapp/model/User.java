@@ -16,8 +16,10 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private boolean isEnabled;
 
-//    private ArrayList<Friend> friends = new ArrayList<>();
+
+
 
     public User() {
     }
@@ -30,6 +32,13 @@ public class User {
 //        return friends;
 //    }
 
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 
     public String getEmail() {
         return email;

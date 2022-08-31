@@ -11,14 +11,13 @@ class App extends Component {
   state = { 
     
    } 
-  login
   render() { 
     return (
       <div className="App">
         <header className="App-header">
           <Routes>
             <Route exact path='/' element={<Login/>}></Route>
-            <Route exact path="/registration" element={<Registration/>} />
+            <Route exact path="/register" element={<Registration/>}></Route>
 
           </Routes>
           
