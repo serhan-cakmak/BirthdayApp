@@ -1,5 +1,6 @@
 package com.serbay.birthdayapp.service;
 
+import com.serbay.birthdayapp.model.Friend;
 import com.serbay.birthdayapp.model.User;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface UserService {
     public List<User> getAllUsers();
     public int userValidator( String email , String password);
     public Optional<User> getUser();
+
+    public int addFriend( Friend friend);
+    public List<Friend> getAllFriends();
 }

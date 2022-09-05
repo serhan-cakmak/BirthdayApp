@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User {
@@ -18,8 +19,31 @@ public class User {
     private String password;
     private boolean isEnabled;
 
+    private String friends;
 
+//    public String getFriends() {
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFriends() {
+        return friends;
+    }
+
+    public void setFriends(String friends) {
+        this.friends = friends;
+    }
+//        return friends;
+//    }
+//
+//    public void setFriends(String friends) {
+//        this.friends = friends;
+//    }
 
     public User() {
     }

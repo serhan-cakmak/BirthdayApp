@@ -5,7 +5,8 @@ import Registration from './registration';
 
 import axios from '../api/axios';
 import { Route, Routes } from 'react-router';
-import { Link } from 'react-router-dom'
+import { Link, Navigate} from 'react-router-dom'
+
 const User_Url = '/user/login';
 
 
@@ -40,10 +41,10 @@ const Login = () => {
                 headers : {'Content-Type' : 'application/json'},      
             });
            
-            const userObject = await axios.get(User_Url +'/getUser');
-            console.log(userObject);
-            userInfo = userObject.data;
-
+            // const userObject = await axios.get(User_Url +'/getUser');
+            
+            // userInfo = userObject.data;
+            // console.log(userInfo);
             // console.log(JSON.stringify(userid?.data));
             // const accessToken = response?.data?.accessToken;
             // setAuth({email, pwd , accessToken});
@@ -72,11 +73,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>You are logged in! {userid}</h1>
-                    <br />
-                    <p>
-                        <a href="#">Go to Home</a>
-                    </p>
+                    <Navigate to="./home"/>
                 </section>
             ) : (
                 <section>
@@ -84,7 +81,7 @@ const Login = () => {
                     <h1>Sign In</h1>
                     <form onSubmit={handleSubmit}>
                         
-                        <label htmlFor="email">Email: </label>
+                        <label htmlFor="email" >Email: </label>
                         <input
                             type="text"
                             id="email"

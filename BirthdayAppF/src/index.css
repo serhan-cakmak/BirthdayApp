@@ -52,12 +52,35 @@ a, a:visited {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="date"],
 button,
 textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 20px;
   padding: 0.25rem;
   border-radius: 0.5rem;
+  visibility: visible;
+}
+
+ul[class ="Friends"]{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+    color: rgb(201, 25, 25);
+}
+div[class ="Friends"]{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+    color: rgb(182, 37, 158);
+    width: flex;
+    border: 10px solid green;
+    padding: 10px;
+    margin: 20px;
 }
 
 label,
