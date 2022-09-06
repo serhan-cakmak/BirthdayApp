@@ -38,21 +38,27 @@ public class UserServiceImpl implements  UserService{
     }
 
     @Override
-    public int addFriend(Friend friend) {
-        return userRepository.addFriend(friend.getName(), friend.getBirthday());
+    public int addFriend(Friend friend, int id) {
+        return userRepository.addFriend(friend.getName(), friend.getBirthday(), id);
     }
 
     @Override
-    public List<Friend> getAllFriends() {
-        String[] friendStrings = userRepository.getAllFriends().split("\0");
-        List<Friend> res = new ArrayList<>();
-        for (int i = 0; i < friendStrings.length; i++ ){
-            String[] ob = friendStrings[i].split("/");
-            ob[1] = ob[1].substring(8) +"." + ob[1].substring(5,7) + "." + ob[1].substring(0,4);
-            res.add( new Friend(i,ob[0], ob[1]));
+    public List<Friend> getAllFriends(String id) {
+        try {
+            userRepository.disenable();
+            String[] friendStrings = userRepository.getAllFriends(id).split("\0");
+            List<Friend> res = new ArrayList<>();
+            for (int i = 0; i < friendStrings.length; i++ ){
+                String[] ob = friendStrings[i].split("/");
+                ob[1] = ob[1].substring(8) +"." + ob[1].substring(5,7) + "." + ob[1].substring(0,4);
+                res.add( new Friend(i,ob[0], ob[1]));
+            }
+            Collections.sort(res);
+            return res;
+        }catch (Exception e){
+            return null;
         }
-        Collections.sort(res);
-        return res;
+
     }
 
 

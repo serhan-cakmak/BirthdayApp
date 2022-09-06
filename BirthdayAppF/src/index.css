@@ -28,8 +28,9 @@ body {
 
 section {
     width: 100%;
-    max-width: 420px;
-    min-height: 400px;
+    height: 100%;
+    /* max-width: 420px;
+    min-height: 400px; */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -79,7 +80,7 @@ div[class ="Friends"]{
     color: rgb(182, 37, 158);
     width: flex;
     border: 10px solid green;
-    padding: 10px;
+    padding: 30px;
     margin: 20px;
 }
 

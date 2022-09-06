@@ -39,14 +39,14 @@ public class UserController {
 //        user = userService.getUser();
         return userService.getUser();
         }
-    @PostMapping("/addFriend")
-    public int addFriend(@RequestBody Friend friend){
-        return userService.addFriend(friend);
+    @PostMapping("/addFriend/{id}")
+    public int addFriend(@RequestBody Friend friend, @PathVariable int id){
+        return userService.addFriend(friend, id);
     }
 
-    @GetMapping("/getFriends")
-    public List<Friend> getFriends(){
-        return userService.getAllFriends();
+    @GetMapping("/getFriends/{id}")
+    public List<Friend> getFriends(@PathVariable String id){
+        return userService.getAllFriends(id);
     }
 
 }

@@ -12,6 +12,6 @@ public interface UserService {
     public int userValidator( String email , String password);
     public Optional<User> getUser();
 
-    public int addFriend( Friend friend);
-    public List<Friend> getAllFriends();
+    public int addFriend( Friend friend, int id);
+    public List<Friend> getAllFriends(String id);
 }

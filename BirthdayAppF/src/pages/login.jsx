@@ -19,9 +19,9 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-    var userid =0;
-    var userInfo=null;
-
+    const [userInfo, setUserInfo] = useState([]);
+ 
+    
     useEffect(() => {
         emailRef.current.focus();
     }, [])
@@ -41,9 +41,10 @@ const Login = () => {
                 headers : {'Content-Type' : 'application/json'},      
             });
            
-            // const userObject = await axios.get(User_Url +'/getUser');
+            const userOb = await axios.get(User_Url +'/getUser');
+            setUserInfo(userOb.data);
+            // console.log(userInfo.data);
             
-            // userInfo = userObject.data;
             // console.log(userInfo);
             // console.log(JSON.stringify(userid?.data));
             // const accessToken = response?.data?.accessToken;
@@ -73,7 +74,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <Navigate to="./home"/>
+                    <Navigate to={"./home/" + userInfo.id + "/" + userInfo.name }/>
                 </section>
             ) : (
                 <section>

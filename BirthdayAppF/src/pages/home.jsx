@@ -10,6 +10,8 @@ const Home = () =>{
     const [success, setSuccess] = useState(false);
     const [friends, setFriends] = useState([]);
     const [errMsg, setErrMsg] = useState('');
+    var userId = ( window.location.pathname.split("/")[2]);
+
     const errRef = useRef();
     // const [_visibility, setVisibility] = useState("visible");
 
@@ -24,7 +26,7 @@ const Home = () =>{
     // }
 
 
-////////////////////////////////////////////////////////////////loginledikten sonra isenabled ı kapatıp getuserdaki bilgeleri bu dosyaya aktar
+
 
 
     const handleSubmit = async (e) =>{
@@ -34,7 +36,7 @@ const Home = () =>{
             const friend = { name: name, birthday : bday};
             setErrMsg('');
             // console.log(friend);
-            const response = await axios.post("/user/addFriend", JSON.stringify(friend),
+            const response = await axios.post("/user/addFriend/"+userId, JSON.stringify(friend),
             {
                 headers : {'Content-Type' : 'application/json'},      
             });
@@ -54,13 +56,37 @@ const Home = () =>{
     const getFriends = async (e) =>{
        
         try{
-            const response = await axios.get("/user/getFriends");
+            
+            // console.log(window.location.pathname.split("/")[2]);
+            // console.log(userId);
+            const response = await axios.get("/user/getFriends/"+ userId);
+     
+            console.log(response);
+            setFriends( response.data.map((object) => {
+                    
+                return(
+                    <div className="Friends" key={object.id}>
+                    
+                            <h1>
+                                {object.name}
+                            </h1>
+
+                            <p>
+                                {object.birthday}
+                            </p>
+
+                    </div>
+                   
+                )
+            } ))
+            // console.log(response);
+           
             console.log(response.data);
-            setFriends( response.data);
+            // setFriends( response.data);
       
         }catch (err) {
             if (!err?.response) {
-                setErrMsg('No Server Response');
+                setErrMsg('No friends added yet');
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');
             } else if (err.response?.status === 401) {
@@ -77,6 +103,22 @@ const Home = () =>{
 
     useEffect(() => {}, [errMsg])
     useEffect(() => {getFriends();},[])
+    // useEffect(() => {
+    //     const handleTabClose = event => {
+    //       event.preventDefault();
+    
+    //       console.log('beforeunload event triggered');
+    
+    //       return (event.returnValue = 'Are you sure you want to exit?');
+    //     };
+    
+    //     window.addEventListener('beforeunload', handleTabClose);
+    //     return () => {
+    //       window.removeEventListener('beforeunload', handleTabClose);
+          
+    //     };
+    //   }, []);
+
     function handleAddFriend(){
         setSuccess(true)
     }
@@ -89,28 +131,7 @@ const Home = () =>{
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 
                 <section key ={friends.id} >
-                    {friends.map((object) => {
-                    
-                    return(
-                        <div className="Friends" key={object.id}>
-                        
-                                <h1>
-                                    {object.name}
-                                </h1>
-
-                                <p>
-                                    {object.birthday}
-                                </p>
-
-                        
-                             
-                        </div>
-                        
-                        
-                        
-                       
-                    )
-                } )}
+                    {friends}
                 </section>
             
             </section>

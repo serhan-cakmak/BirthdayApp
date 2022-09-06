@@ -1,9 +1,6 @@
 package com.serbay.birthdayapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +15,8 @@ public class User {
     private String email;
     private String password;
     private boolean isEnabled;
-
-    private String friends;
+    @Column(name="friends")
+    private String friends ="";
 
 //    public String getFriends() {
 
