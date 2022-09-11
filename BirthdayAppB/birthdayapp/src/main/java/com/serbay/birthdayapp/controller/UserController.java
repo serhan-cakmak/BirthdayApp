@@ -49,4 +49,9 @@ public class UserController {
         return userService.getAllFriends(id);
     }
 
+    @PostMapping("/resetFriends/{id}")
+    public int addFriend( @PathVariable int id){
+        return userService.resetFriends( id);
+    }
+
 }

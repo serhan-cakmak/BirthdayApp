@@ -27,7 +27,7 @@ const Login = () => {
     }, [])
 
     useEffect(() => {
-        setErrMsg('');
+        // setErrMsg('');
     }, [email, pwd])
 
     const handleSubmit = async (e) =>{
@@ -35,15 +35,15 @@ const Login = () => {
 
         try{
             const user ={  email:email ,password:pwd };
-            console.log(user);
+            // console.log(user);
             const response = await axios.post(User_Url, JSON.stringify(user),
             {
                 headers : {'Content-Type' : 'application/json'},      
             });
-           
+            // console.log(response);
             const userOb = await axios.get(User_Url +'/getUser');
-            setUserInfo(userOb.data);
-            // console.log(userInfo.data);
+            
+            // console.log(userOb.data);
             
             // console.log(userInfo);
             // console.log(JSON.stringify(userid?.data));
@@ -52,8 +52,15 @@ const Login = () => {
             
             setEmail('');
             setPwd('');
-            setSuccess(true);
-            
+            if (userOb.data){
+                
+                setSuccess(true);
+                setUserInfo(userOb.data);
+            }else{
+                setErrMsg("Login Failed");
+            }
+           
+        
         } catch (err) {
             console.log(err);
             if (!err?.response) {

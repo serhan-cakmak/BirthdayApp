@@ -13,18 +13,6 @@ const Home = () =>{
     var userId = ( window.location.pathname.split("/")[2]);
 
     const errRef = useRef();
-    // const [_visibility, setVisibility] = useState("visible");
-
-
-
-    // const useComponentWillMount = (cb) => {
-    //     const willMount = useRef(true)
-    
-    //     if (willMount.current) cb()
-    
-    //     willMount.current = false
-    // }
-
 
 
 
@@ -35,44 +23,53 @@ const Home = () =>{
         try{
             const friend = { name: name, birthday : bday};
             setErrMsg('');
-            // console.log(friend);
+   
             const response = await axios.post("/user/addFriend/"+userId, JSON.stringify(friend),
             {
                 headers : {'Content-Type' : 'application/json'},      
             });
-            // console.log(response);
-            // setSuccess(true);
+            
             getFriends();
             setName('');
             setBday('');
-            // setVisibility('hidden')
-            // document.getElementById("AddFrom").style.visibility = "hidden";
+           
         }catch(err){
             console.log(err);
             
-            //Display error for user 
+          
         }
     }
     const getFriends = async (e) =>{
        
         try{
             
-            // console.log(window.location.pathname.split("/")[2]);
-            // console.log(userId);
             const response = await axios.get("/user/getFriends/"+ userId);
      
             console.log(response);
             setFriends( response.data.map((object) => {
-                    
+              
+                // object.remainingDays = dateDiffInDays(now,new Date(object.birthday));
+                
+                let arr = object.birthday.split("T");
+                let a = arr[0].substring(8) +"." + arr[0].substring(5,7) + "." + arr[0].substring(0,4);
+                
                 return(
                     <div className="Friends" key={object.id}>
                     
                             <h1>
-                                {object.name}
+                                {object.name} 's
                             </h1>
 
-                            <p>
-                                {object.birthday}
+                           
+                            <p style = {(object.remainingDays==1 || object.remainingDays==0 )  ? {display: 'none'} : {} }> 
+                                {getOrdinalNum( object.age)} birthday is in {object.remainingDays} days!
+                            </p>
+                            
+                            <p style = {object.remainingDays==1  ? {} :{display: 'none'}  }> 
+                                {getOrdinalNum( object.age)} Birthday is in {object.remainingDays} day!
+                            </p>
+                            <p style={object.remainingDays==0  ? {} :{display: 'none'}  }>
+                                Today is the {getOrdinalNum( object.age)} birthday!
                             </p>
 
                     </div>
@@ -85,6 +82,7 @@ const Home = () =>{
             // setFriends( response.data);
       
         }catch (err) {
+            console.log(err);
             if (!err?.response) {
                 setErrMsg('No friends added yet');
             } else if (err.response?.status === 400) {
@@ -100,29 +98,45 @@ const Home = () =>{
             errRef.current.focus();
         }
     }
+   
 
+    // a and b are javascript Date objects
+    // function dateDiffInDays(a, b) {
+    //     let res = (a.getTime()- b.getTime()) / _MS_PER_DAY;
+        
+    //     return (res>0) ? 365- Math.ceil(res) : Math.abs( Math.floor(res));
+      
+    // }
     useEffect(() => {}, [errMsg])
     useEffect(() => {getFriends();},[])
-    // useEffect(() => {
-    //     const handleTabClose = event => {
-    //       event.preventDefault();
-    
-    //       console.log('beforeunload event triggered');
-    
-    //       return (event.returnValue = 'Are you sure you want to exit?');
-    //     };
-    
-    //     window.addEventListener('beforeunload', handleTabClose);
-    //     return () => {
-    //       window.removeEventListener('beforeunload', handleTabClose);
-          
-    //     };
-    //   }, []);
+   
+    const getOrdinalNum = (number) => {
+        let selector;
+      
+        if (number <= 0) {
+          selector = 4;
+        } else if ((number > 3 && number < 21) || number % 10 > 3) {
+          selector = 0;
+        } else {
+          selector = number % 10;
+        }
+      
+        return number + ['th', 'st', 'nd', 'rd', ''][selector];
+      };
 
     function handleAddFriend(){
         setSuccess(true)
     }
-    //Getten aldıgın degeri displaylemek için yola ara
+    const handleReset = async (e) =>{
+        try {
+            axios.post('/user/resetFriends/'+userId);
+            setFriends([]);
+            setErrMsg('Friend list has reset.')
+        }catch(err){
+            setErrMsg('Problem occured while reseting friends.')
+        }
+
+    }
  
     return(
         
@@ -156,7 +170,7 @@ const Home = () =>{
                         type="date"
                         id="bday"
                         autoComplete="off"
-                        // max={20220831} max koy
+                        // max={20220831} max koy///////////////////////////////////////////////////////////////////////////////maxi localdate.now yap
                         onChange={(e) => setBday(e.target.value)}
                         value={bday}
                         required
@@ -173,6 +187,7 @@ const Home = () =>{
             </section>
 
             <button onClick={handleAddFriend} style = {success ? {display: 'none'} : {} } >Add Friend</button>
+            <button onClick={handleReset}  >Reset Friends</button>
     
         </section>)
     

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Repository
@@ -36,6 +37,10 @@ public interface UserRepository extends JpaRepository<User, Integer >{
     @Transactional
     @Query(value = "select u.friends from birthday.user u where u.id = ?1", nativeQuery = true)
     String getAllFriends(String id);
+    @Modifying
+    @Transactional
+    @Query(value = "update birthday.user u set u.friends ='' where u.id= ?1 ", nativeQuery = true)
+    int reset(int id);
 
 
 }

@@ -14,4 +14,5 @@ public interface UserService {
 
     public int addFriend( Friend friend, int id);
     public List<Friend> getAllFriends(String id);
+    public int resetFriends(int id);
 }
