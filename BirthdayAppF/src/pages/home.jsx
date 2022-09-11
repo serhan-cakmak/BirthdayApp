@@ -10,6 +10,7 @@ const Home = () =>{
     const [success, setSuccess] = useState(false);
     const [friends, setFriends] = useState([]);
     const [errMsg, setErrMsg] = useState('');
+    const [msg, setMsg] = useState(false);
     var userId = ( window.location.pathname.split("/")[2]);
 
     const errRef = useRef();
@@ -77,14 +78,17 @@ const Home = () =>{
                 )
             } ))
             // console.log(response);
-           
+            setMsg(true)
             console.log(response.data);
             // setFriends( response.data);
       
         }catch (err) {
             console.log(err);
             if (!err?.response) {
-                setErrMsg('No friends added yet');
+                // setErrMsg('No friends added yet');
+                
+                
+                
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');
             } else if (err.response?.status === 401) {
@@ -109,6 +113,7 @@ const Home = () =>{
     // }
     useEffect(() => {}, [errMsg])
     useEffect(() => {getFriends();},[])
+    // useEffect(() => {setMsg(false)}, [msg])
    
     const getOrdinalNum = (number) => {
         let selector;
@@ -128,6 +133,7 @@ const Home = () =>{
         setSuccess(true)
     }
     const handleReset = async (e) =>{
+        setMsg(true);
         try {
             axios.post('/user/resetFriends/'+userId);
             setFriends([]);
@@ -141,6 +147,14 @@ const Home = () =>{
     return(
         
         <section>
+            <div style={ msg ? {display : 'none'} :{} }>
+                    <h1>
+                    Welcome!
+                </h1>    
+                <p className='line'>
+                    Add friends to find out the closest birthday.
+                </p>
+            </div>
             <section>
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 
