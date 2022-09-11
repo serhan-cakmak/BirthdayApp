@@ -157,26 +157,28 @@ const Home = () =>{
                 <form id='AddForm'  onSubmit={handleSubmit}>
                     <label htmlFor='userName'></label>
                     <input
+                        className='un'
                         type="text"
                         id="name"
                         autoComplete="off"
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                         required
+                        placeholder="Friend's name"
                     />
 
                     <label htmlFor='bday'></label>
                     <input
+                        className='un'
                         type="date"
                         id="bday"
                         autoComplete="off"
-                        // max={20220831} max koy///////////////////////////////////////////////////////////////////////////////maxi localdate.now yap
                         onChange={(e) => setBday(e.target.value)}
                         value={bday}
                         required
                         
                     />
-                    <button>Add</button>
+                    <button className='submit'>Add</button>
 
                 
 
@@ -186,8 +188,8 @@ const Home = () =>{
 
             </section>
 
-            <button onClick={handleAddFriend} style = {success ? {display: 'none'} : {} } >Add Friend</button>
-            <button onClick={handleReset}  >Reset Friends</button>
+            <button className='submit' onClick={handleAddFriend} style = {success ? {display: 'none'} : {} } >Add Friend</button>
+            <button className='submit' onClick={handleReset}  >Reset Friends</button>
     
         </section>)
     

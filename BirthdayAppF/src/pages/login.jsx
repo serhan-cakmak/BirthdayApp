@@ -84,13 +84,14 @@ const Login = () => {
                     <Navigate to={"./home/" + userInfo.id + "/" + userInfo.name }/>
                 </section>
             ) : (
-                <section>
+                <section className='sign'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className='sign' onSubmit={handleSubmit}>
                         
-                        <label htmlFor="email" >Email: </label>
+                        <label htmlFor="email" ></label>
                         <input
+                            className='un'
                             type="text"
                             id="email"
                             ref={emailRef}
@@ -98,28 +99,32 @@ const Login = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             required
+                            placeholder='Email'
                         />
                     
-                        <label htmlFor="password">Password: </label>
+                        <label htmlFor="password"></label>
                         <input
+                            className='pass'
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
                             required
+                            placeholder='Password'
                         />
                        
-                        <button>Sign In</button>
+                        <button className='submit'>Sign In</button>
                     </form>
                     <p>
                         Need an Account?<br />
-                        <span className="line">
+                        
+                    </p>
+                    <span className="line">
                             
                             <Link to={"./register"}>
-                                Sign up
+                                Sign Up
                             </Link>
-                        </span>
-                    </p>
+                    </span>
                 </section>
             )}
         </>

@@ -100,7 +100,7 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Success!</h1>
+                    <h1 className="sign">Success!</h1>
                     <p>
                         <Link to={'/'}>
                             Sign In
@@ -108,16 +108,17 @@ const Register = () => {
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className='sign'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
+                    <h1 >Register</h1>
+                    <form className="sign" onSubmit={handleSubmit}>
                         <label htmlFor="username">
-                            Username:
+                            
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validName || !userName ? "hide" : "invalid"} />
                         </label>
                         <input
+                            className="un"
                             type="text"
                             id="username"
                             ref={userRef}
@@ -129,6 +130,7 @@ const Register = () => {
                             aria-describedby="uidnote"
                             onFocus={() => setUserFocus(true)}
                             onBlur={() => setUserFocus(false)}
+                            placeholder= "Username"
                         />
                         <p id="uidnote" className={userFocus && userName && !validName ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
@@ -138,11 +140,12 @@ const Register = () => {
                         </p>
 
                         <label htmlFor="email">
-                            Email:
                             <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
                         </label>
                         <input
+                            className="un"
+                            placeholder="Email"
                             type="email"
                             id="email"
                             ref={userRef}
@@ -163,11 +166,12 @@ const Register = () => {
 
 
                         <label htmlFor="password">
-                            Password:
                             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                         </label>
                         <input
+                            className="pass"
+                            placeholder="Password"
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
@@ -187,11 +191,12 @@ const Register = () => {
 
 
                         <label htmlFor="confirm_pwd">
-                            Confirm Password:
                             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
                         <input
+                            className="pass"
+                            placeholder=" Confirm Password"
                             type="password"
                             id="confirm_pwd"
                             onChange={(e) => setMatchPwd(e.target.value)}
@@ -207,14 +212,18 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button className='submit' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
                     <p>
                         Already registered?<br />
-                        <Link to={'/'}>
-                            Sign In
-                        </Link>
+                        
+                        
                     </p>
+                    <span className="line">
+                            <Link to={'/'}>
+                            Sign In
+                            </Link>
+                    </span>
                 </section>
             )}
         </>
