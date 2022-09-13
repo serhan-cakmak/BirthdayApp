@@ -18,8 +18,14 @@ public class UserServiceImpl implements  UserService{
 
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public String saveUser(User user) {
+        if (userRepository.emailUnique(user.getEmail()) == null) {
+            userRepository.save(user);
+            return "true";
+        }else{
+            return "false";
+        }
+
     }
 
     @Override

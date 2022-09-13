@@ -20,6 +20,11 @@ public interface UserRepository extends JpaRepository<User, Integer >{
     @Query(value = "update birthday.user u set u.is_enabled =true where u.email = ?1 and u.password = ?2 ", nativeQuery = true)
     int userValidator(String email, String password);
 
+
+    @Transactional
+    @Query(value = "select u.email from birthday.user u where u.email = ?1 ", nativeQuery = true)
+    String emailUnique(String email);
+
     @Modifying
     @Transactional
     @Query(value = "update birthday.user u set u.is_enabled =false where u.is_enabled = true ", nativeQuery = true)

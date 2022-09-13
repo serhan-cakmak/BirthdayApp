@@ -74,7 +74,12 @@ const Register = () => {
                     withCredentials: false
                 }
             );
-            // console.log(response?.data);
+            // console.log(response);
+            if (response.data == false){
+                
+                throw "Warning";
+                
+            }
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
             setSuccess(true);
@@ -85,12 +90,18 @@ const Register = () => {
             setPwd('');
             setMatchPwd('');
         } catch (err) {
-            if (!err?.response) {
+            console.log(err);
+            if (err == "Warning") {
+                
+                setErrMsg('The Email Has Already In Use\n Please Change The Email');
+                
+            }
+            else if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 409) {
                 setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
+            } else{
+                setErrMsg('Problem Has Occured.')
             }
             errRef.current.focus();
         }

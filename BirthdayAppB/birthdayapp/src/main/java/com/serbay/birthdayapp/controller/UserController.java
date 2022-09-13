@@ -20,8 +20,7 @@ public class UserController {
 //    private int userId;
     @PostMapping("/register")
     public String add(@RequestBody User user){
-        userService.saveUser(user);
-        return "New user is added";
+        return  userService.saveUser(user);
     }
 
 //    @GetMapping("/getAll")
