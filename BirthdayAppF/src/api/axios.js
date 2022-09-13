@@ -1,4 +1,4 @@
 import axios from 'axios';
 export default axios.create({
-    baseURL : 'http://localhost:8080'
+    baseURL : 'http://birthday-env.eba-pnmx93hn.us-east-1.elasticbeanstalk.com'
 });
